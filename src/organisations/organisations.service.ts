@@ -1,26 +1,39 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateOrganisationDto } from './dto/create-organisation.dto';
-import { UpdateOrganisationDto } from './dto/update-organisation.dto';
-
+import { IOrganisation } from './entities/organisation.entity';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class OrganisationsService {
-  create(createOrganisationDto: CreateOrganisationDto) {
-    return 'This action adds a new organisation';
-  }
+  constructor(
+    @InjectModel('Organisation')
+    private readonly organisationModal: Model<IOrganisation>,
+  ) {}
 
-  findAll() {
-    return `This action returns all organisations`;
-  }
+  async create(createOrganisationDto: CreateOrganisationDto): Promise<any> {
+    let org: any;
 
-  findOne(id: number) {
-    return `This action returns a #${id} organisation`;
-  }
+    try {
+      if (!createOrganisationDto.name) {
+        throw new BadRequestException('Name is required');
+      } else {
+        org = await this.organisationModal.findOne({
+          name: createOrganisationDto.name,
+          pan: createOrganisationDto.pan,
+          gst: createOrganisationDto.gst,
+        });
+      }
 
-  update(id: number, updateOrganisationDto: UpdateOrganisationDto) {
-    return `This action updates a #${id} organisation`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} organisation`;
+      if (!org) {
+        org = await this.organisationModal.create(createOrganisationDto);
+      } else {
+        throw new BadRequestException(
+          'Organisation with this detail already exist',
+        );
+      }
+      return org;
+    } catch (e: any) {
+      throw new BadRequestException(e.message);
+    }
   }
 }
