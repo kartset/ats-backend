@@ -7,9 +7,18 @@ import { VacanciesModule } from './vacancies/vacancies.module';
 import { CandidatesModule } from './candidates/candidates.module';
 import { SkillsModule } from './skills/skills.module';
 import { ApplicationsModule } from './applications/applications.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [OrganisationsModule, EmployeesModule, VacanciesModule, CandidatesModule, SkillsModule, ApplicationsModule],
+  imports: [
+    MongooseModule.forRoot('mongodb://localhost/ats'),
+    OrganisationsModule,
+    EmployeesModule,
+    VacanciesModule,
+    CandidatesModule,
+    SkillsModule,
+    ApplicationsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
