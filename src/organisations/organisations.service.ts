@@ -36,4 +36,9 @@ export class OrganisationsService {
       throw new BadRequestException(e.message);
     }
   }
+
+  async getOne(id: string): Promise<any> {
+    const org = await this.organisationModal.findOne({ _id: id });
+    return org;
+  }
 }
