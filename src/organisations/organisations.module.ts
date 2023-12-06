@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { OrganisationsService } from './organisations.service';
 import { OrganisationsController } from './organisations.controller';
 import { OrganisationSchema } from './entities/organisation.entity';
 import { MongooseModule } from '@nestjs/mongoose';
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeature([

@@ -31,7 +31,7 @@ export class EmployeesService {
       user.password = generatePassword();
       user.organisationName = organisation.name;
       user = await this.employeeModel.create({ ...user, ...createEmployeeDto });
-    } catch (e) {
+    } catch (e: any) {
       throw new BadRequestException(e.message);
     }
     return user;
