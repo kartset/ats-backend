@@ -12,7 +12,7 @@ export class EmployeesService {
     @InjectModel('Employee') private readonly employeeModel: Model<IEmployee>,
     private organisationService: OrganisationsService,
   ) {}
-  async create(createEmployeeDto: CreateEmployeeDto): Promise<any> {
+  async create(createEmployeeDto: CreateEmployeeDto): Promise<IEmployee> {
     let user: any = {};
     try {
       if (!createEmployeeDto.orgId) {
@@ -37,8 +37,9 @@ export class EmployeesService {
     return user;
   }
 
-  findAll() {
-    return `This action returns all employees`;
+  async getOne(id: string): Promise<IEmployee> {
+    const emp = await this.employeeModel.findOne({ _id: id });
+    return emp;
   }
 
   findOne(id: number) {
