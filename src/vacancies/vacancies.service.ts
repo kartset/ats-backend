@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+} from '@nestjs/common';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { UpdateVacancyDto } from './dto/update-vacancy.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -37,7 +42,7 @@ export class VacanciesService {
         throw new BadRequestException("Employee doesn't exist for this id");
       }
     } catch (error: any) {
-      throw new BadRequestException(error.message);
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
     vacancy = await this.vacancyModel.create(createVacancyDto);
     return vacancy;

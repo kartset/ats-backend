@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
-import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { generatePassword } from 'src/utils/helpers';
 import { IEmployee } from './entities/employee.entity';
 import { Model } from 'mongoose';
@@ -40,17 +39,5 @@ export class EmployeesService {
   async getOne(id: string): Promise<IEmployee> {
     const emp = await this.employeeModel.findOne({ _id: id });
     return emp;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} employee`;
-  }
-
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return `This action updates a #${id} employee`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
   }
 }
