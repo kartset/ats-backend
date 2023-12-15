@@ -2,7 +2,7 @@ import { Schema, SchemaTypes } from 'mongoose';
 
 export const VacancySchema = new Schema({
   title: { type: String, required: true },
-  postion: { type: String, required: true },
+  position: { type: String, required: true },
   type: { type: String, required: true },
   location: { type: String, required: true },
   remote: { type: Boolean, required: true, default: false },
