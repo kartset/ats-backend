@@ -1,1 +1,4 @@
-export class CreateSkillDto {}
+export class CreateSkillDto {
+  id: string;
+  skill: string;
+}
