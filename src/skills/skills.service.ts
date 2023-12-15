@@ -38,11 +38,20 @@ export class SkillsService {
   }
 
   async findAll(skill: string): Promise<any> {
-    const skills = (
-      await this.skillModel
-        .find({ skill: { $regex: skill, $options: 'i' } })
-        .lean()
-    ).slice(0, 5);
+    let skills: any;
+    if (skill) {
+      skills = (
+        await this.skillModel
+          .find({ skill: { $regex: skill, $options: 'i' } })
+          .sort({ mentions: -1 })
+          .lean()
+      ).slice(0, 5);
+    } else {
+      skills = (
+        await this.skillModel.find().sort({ mentions: -1 }).lean()
+      ).slice(0, 6);
+    }
+
     return skills;
   }
 
